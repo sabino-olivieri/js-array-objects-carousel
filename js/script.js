@@ -27,8 +27,6 @@ let scrollActiveReverse = false;
 
 scrollImage();
 
-
-
 // inserisco immagini nel DOM
 images.forEach((curElem) => {
     const itemElem = document.createElement("div");
@@ -65,39 +63,20 @@ const allThumbnails = document.querySelectorAll("img.my-thumbnail")
 console.log(allThumbnails);
 
 // prendo la prima immagine e la prima thumbnail e aggiungo classe active
-toggleClass(allCarouselItem[indexItem], activeClass);
-
-toggleClass(allThumbnails[indexItem], activeClass);
+toggleCaruselThumbnails();
 
 nextElem.addEventListener("click", () => {
-    toggleClass(allCarouselItem[indexItem], activeClass);
-    toggleClass(allThumbnails[indexItem], activeClass);
-    indexItem++;
-    if (indexItem > allCarouselItem.length - 1) {
-        indexItem = 0;
-    }
-
-    toggleClass(allCarouselItem[indexItem], activeClass);
-    toggleClass(allThumbnails[indexItem], activeClass);
+    nextScroll();
 });
 
 prevElem.addEventListener("click", () => {
-    toggleClass(allCarouselItem[indexItem], activeClass);
-    toggleClass(allThumbnails[indexItem], activeClass);
-    indexItem--;
-    if (indexItem < 0) {
-        indexItem = allCarouselItem.length - 1;
-    }
-
-    toggleClass(allCarouselItem[indexItem], activeClass);
-    toggleClass(allThumbnails[indexItem], activeClass);
+    prevScroll();
 });
 
 // aggiungo event listner a tutte i tuhmbnail
 allThumbnails.forEach((curItem, index) => {
     curItem.addEventListener("click", () => {
-        toggleClass(allThumbnails[indexItem], activeClass)
-        toggleClass(allCarouselItem[indexItem], activeClass)
+        toggleCaruselThumbnails()
 
         indexItem = index;
         toggleClass(curItem, activeClass)
@@ -115,17 +94,7 @@ orderBtnElem.addEventListener("click", () => {
         scrollActiveReverse = true;
 
         timeReverse = setInterval(() => {
-            toggleClass(allCarouselItem[indexItem], activeClass);
-            toggleClass(allThumbnails[indexItem], activeClass);
-            indexItem--;
-
-            if (indexItem < 0) {
-                indexItem = allCarouselItem.length - 1;
-            }
-
-            toggleClass(allCarouselItem[indexItem], activeClass);
-            toggleClass(allThumbnails[indexItem], activeClass);
-
+            prevScroll()
         }, 3000);
     }
 });
@@ -140,23 +109,3 @@ stopBtnElem.addEventListener("click", () => {
         scrollImage();
     }
 });
-
-function scrollImage() {
-    clearInterval(time);
-    clearInterval(timeReverse);
-    scrollActive = true;
-
-    time = setInterval(() => {
-        toggleClass(allCarouselItem[indexItem], activeClass);
-        toggleClass(allThumbnails[indexItem], activeClass);
-        indexItem++;
-
-        if (indexItem > allCarouselItem.length - 1) {
-            indexItem = 0;
-        }
-
-        toggleClass(allCarouselItem[indexItem], activeClass);
-        toggleClass(allThumbnails[indexItem], activeClass);
-
-    }, 3000);
-}
