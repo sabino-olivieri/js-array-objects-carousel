@@ -9,7 +9,25 @@ console.log(prevElem);
 
 const thumbnailsElem = document.querySelector(".my-thumbnails");
 
+const orderBtnElem = document.getElementById("my-order-button");
+
+const stopBtnElem = document.getElementById("my-stop-button");
+
 const activeClass = "active";
+
+let indexItem = 0;
+
+// variabili per controllare i setInterval
+let time;
+let timeReverse;
+
+// flag per verificare se è attivo uno scroll
+let scrollActive = true;
+let scrollActiveReverse = false;
+
+scrollImage();
+
+
 
 // inserisco immagini nel DOM
 images.forEach((curElem) => {
@@ -27,7 +45,7 @@ images.forEach((curElem) => {
     `
     console.log(itemElem);
 
-    const thumbnails = document.createElement("img"); 
+    const thumbnails = document.createElement("img");
     thumbnails.classList.add("img-fluid", "my-thumbnail");
     thumbnails.src = `./${curElem.image}`
     thumbnails.alt = `${curElem.title} picture`
@@ -46,10 +64,6 @@ console.log(allCarouselItem);
 const allThumbnails = document.querySelectorAll("img.my-thumbnail")
 console.log(allThumbnails);
 
-
-
-let indexItem = 0;
-
 // prendo la prima immagine e la prima thumbnail e aggiungo classe active
 toggleClass(allCarouselItem[indexItem], activeClass);
 
@@ -59,7 +73,7 @@ nextElem.addEventListener("click", () => {
     toggleClass(allCarouselItem[indexItem], activeClass);
     toggleClass(allThumbnails[indexItem], activeClass);
     indexItem++;
-    if(indexItem > allCarouselItem.length - 1) {
+    if (indexItem > allCarouselItem.length - 1) {
         indexItem = 0;
     }
 
@@ -71,7 +85,7 @@ prevElem.addEventListener("click", () => {
     toggleClass(allCarouselItem[indexItem], activeClass);
     toggleClass(allThumbnails[indexItem], activeClass);
     indexItem--;
-    if(indexItem < 0) {
+    if (indexItem < 0) {
         indexItem = allCarouselItem.length - 1;
     }
 
@@ -88,20 +102,61 @@ allThumbnails.forEach((curItem, index) => {
         indexItem = index;
         toggleClass(curItem, activeClass)
         toggleClass(allCarouselItem[index], activeClass)
-        
+
     });
 });
 
-const time = setInterval(() => {
-    toggleClass(allCarouselItem[indexItem], activeClass);
-    toggleClass(allThumbnails[indexItem], activeClass);
-    indexItem++;
+orderBtnElem.addEventListener("click", () => {
 
-    if(indexItem > allCarouselItem.length - 1) {
-        indexItem = 0;
+    if (!scrollActiveReverse) {
+        clearInterval(time);
+
+        scrollActive = false;
+        scrollActiveReverse = true;
+
+        timeReverse = setInterval(() => {
+            toggleClass(allCarouselItem[indexItem], activeClass);
+            toggleClass(allThumbnails[indexItem], activeClass);
+            indexItem--;
+
+            if (indexItem < 0) {
+                indexItem = allCarouselItem.length - 1;
+            }
+
+            toggleClass(allCarouselItem[indexItem], activeClass);
+            toggleClass(allThumbnails[indexItem], activeClass);
+
+        }, 3000);
     }
-    
-    toggleClass(allCarouselItem[indexItem], activeClass);
-    toggleClass(allThumbnails[indexItem], activeClass);
+});
 
-},3000);
+stopBtnElem.addEventListener("click", () => {
+    if (scrollActive || scrollActiveReverse) {
+        clearInterval(time);
+        clearInterval(timeReverse);
+        scrollActive = false;
+        scrollActiveReverse = false;
+    } else {
+        scrollImage();
+    }
+});
+
+function scrollImage() {
+    clearInterval(time);
+    clearInterval(timeReverse);
+    scrollActive = true;
+
+    time = setInterval(() => {
+        toggleClass(allCarouselItem[indexItem], activeClass);
+        toggleClass(allThumbnails[indexItem], activeClass);
+        indexItem++;
+
+        if (indexItem > allCarouselItem.length - 1) {
+            indexItem = 0;
+        }
+
+        toggleClass(allCarouselItem[indexItem], activeClass);
+        toggleClass(allThumbnails[indexItem], activeClass);
+
+    }, 3000);
+}
