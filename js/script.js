@@ -59,14 +59,12 @@ nextElem.addEventListener("click", () => {
     toggleClass(allCarouselItem[indexItem], activeClass);
     toggleClass(allThumbnails[indexItem], activeClass);
     indexItem++;
-    if(indexItem < allCarouselItem.length) {
-        toggleClass(allCarouselItem[indexItem], activeClass);
-        toggleClass(allThumbnails[indexItem], activeClass);
-    } else {
+    if(indexItem > allCarouselItem.length - 1) {
         indexItem = 0;
-        toggleClass(allCarouselItem[indexItem], activeClass);
-        toggleClass(allThumbnails[indexItem], activeClass);
     }
+
+    toggleClass(allCarouselItem[indexItem], activeClass);
+    toggleClass(allThumbnails[indexItem], activeClass);
 });
 
 prevElem.addEventListener("click", () => {
@@ -75,12 +73,10 @@ prevElem.addEventListener("click", () => {
     indexItem--;
     if(indexItem < 0) {
         indexItem = allCarouselItem.length - 1;
-        toggleClass(allCarouselItem[indexItem], activeClass);
-        toggleClass(allThumbnails[indexItem], activeClass);
-    } else {
-        toggleClass(allCarouselItem[indexItem], activeClass);
-        toggleClass(allThumbnails[indexItem], activeClass);
     }
+
+    toggleClass(allCarouselItem[indexItem], activeClass);
+    toggleClass(allThumbnails[indexItem], activeClass);
 });
 
 // aggiungo event listner a tutte i tuhmbnail
@@ -95,3 +91,17 @@ allThumbnails.forEach((curItem, index) => {
         
     });
 });
+
+const time = setInterval(() => {
+    toggleClass(allCarouselItem[indexItem], activeClass);
+    toggleClass(allThumbnails[indexItem], activeClass);
+    indexItem++;
+
+    if(indexItem > allCarouselItem.length - 1) {
+        indexItem = 0;
+    }
+    
+    toggleClass(allCarouselItem[indexItem], activeClass);
+    toggleClass(allThumbnails[indexItem], activeClass);
+
+},3000);
