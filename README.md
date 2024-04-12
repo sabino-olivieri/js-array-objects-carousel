@@ -35,12 +35,12 @@ Aggiungere bottoni di start/stop e di inversione del meccanismo di autoplay.
 
 ## Svolgimento
 
-- [ ] creo ciclo per stampare nel DOM gli oggetti dell'array
-- [ ] creo event listner per i pulsanti
-- [ ] al click del pulsante avanti (stessa cosa per pulsante indietro)
-    - [ ] rimuovo classe active da elemento corrente
-    - [ ] incremento indice (decremento per indietro)
-    - [ ] se indice è minore della lunghezza dell'array (< 0)
+- [x] creo ciclo per stampare nel DOM gli oggetti dell'array
+- [x] creo event listner per i pulsanti
+- [x] al click del pulsante avanti (stessa cosa per pulsante indietro)
+    - [x] rimuovo classe active da elemento corrente
+    - [x] incremento indice (decremento per indietro)
+    - [x] se indice è minore della lunghezza dell'array (< 0)
             - applico classe active all'elemento corrente (eseguo altrimenti)
         altrimenti
             - indice diventa 0 (array.length - 1)
